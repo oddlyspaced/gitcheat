@@ -94,7 +94,6 @@ def follow_oddly():
     driver.execute_script("arguments[0].click();", element_follow)
     driver.get("https://github.com/oddlyspaced")
     print("Done")
-    time.sleep(5)
     client.disconnect()
     driver.quit()
     quit(0)
