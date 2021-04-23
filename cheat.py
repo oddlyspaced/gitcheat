@@ -34,26 +34,28 @@ async def response_handler(event):
                 sign_up()
 
 def generate_email():
+    print("Generating FakeEmail")
     client.send_message(id_fakemailbot, "/generate")
-
 
 # Github SignUp
 option = webdriver.ChromeOptions()
 # For ChromeDriver version 79.0.3945.16 or over
+# Hide automation
 option.add_argument('--disable-blink-features=AutomationControlled')
 #Open Browser
 driver = webdriver.Chrome(executable_path='/usr/bin/chromedriver',options=option)
 link = "https://github.com/join"
 def sign_up():
     global fake_mail
-    #####
-    # fake_mail = "gbbwphpm@hi2.in"
-    #####
+    print("Fake details generated:")
     username = generate_username(1)[0]
     email = fake_mail
     password = fake_mail
+    print("Username: " + str(username) + "\nEmail: " + str(email) + "\nPassword: " + password)
+    print("Loading Sign Up Page...")
     driver.get(link)
     # finding text fields
+    print("Filling text fields...")
     element_username = driver.find_element_by_id("user_login")
     element_email = driver.find_element_by_id("user_email")
     element_password = driver.find_element_by_id("user_password")
@@ -77,22 +79,17 @@ def wait_for_verification():
         follow_oddly()
 
 def verify_join():
-    print("Waiting for Join Github verification")
     element_button = driver.find_element_by_id("signup_button")
+    print("Waiting for Join Github verification")
     while (element_button.get_attribute("disabled") != None):
         time.sleep(1)
     print("Verified and sign up done!")
     follow_oddly()
-    # driver.get("https://github.com/oddlyspaced")
 
 def follow_oddly():
-    print("Following oddly")
     driver.get("https://github.com/oddlyspaced")
+    print("Following oddly")
     # Follow oddlyspaced
-    # element_follow = driver.find_element_by_css_selector("[title^='Follow oddlyspaced']")
-    # element_follow = driver.find_element_by_xpath("//a[@title='Follow oddlyspaced']")
-    # element_follow = driver.find_element_by_xpath("//body/div[4]/main[1]/div[2]/div[1]/div[1]/div[1]/div[3]/div[1]/div[1]/div[1]/span[1]/form[1]/input[2]")
-    # element_follow.click()
     element_follow = driver.find_element_by_name("commit")
     driver.execute_script("arguments[0].click();", element_follow)
     driver.get("https://github.com/oddlyspaced")
